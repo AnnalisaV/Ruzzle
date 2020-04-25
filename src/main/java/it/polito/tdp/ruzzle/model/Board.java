@@ -15,7 +15,7 @@ import javafx.beans.property.StringProperty;
  */
 public class Board {
 	private List<Pos> positions;
-	private Map<Pos, StringProperty> cells;
+	private Map<Pos, StringProperty> cells; // in ogni cella c'e' un singolo carattere quindi si puo' mettere la String che qui diventa StringProperty (bottone direttamente collegato al valore qui dentro, tramite binding, quindi tutte le volte che la stringa cambia fa cambiare anche il testo del bottone)
 
 	private int size;
 
@@ -65,6 +65,7 @@ public class Board {
 
 	/**
 	 * Crea una nuova scacchiera generando tutte lettere casuali
+	 * premendo reset, si genera un carattere a caso in quella posizione
 	 */
 	public void reset() {
 		for(Pos p: this.positions) {

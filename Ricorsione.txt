@@ -1,0 +1,40 @@
+Problema : 
+      APPROCCIO1
+      
+      In input: 
+      Stringa da riconoscere 'parola' 
+      Contenuto della board 
+      La prima lettera della parola deve esistere nella matrice se no tanto vale 
+      quindi serve la posizione della lettera iniziale 
+      
+  Soluzione iniziale: 
+  parte iniziale della parola, gia' riconosciuta 
+  elenco delle posizioni in cui si trovano le lettere gia' riconosciute 
+  (Ruzzle mi da' il vincolo di non poter riutilizzare le lettere)
+  
+  Soluzione totale: 
+  parola completamente riconosciuta
+  elenco di posizioni per comporre la parola completa 
+  
+  Livello: 
+  Numero di caratteri gia' riconosciuti
+  
+  Condizione di terminazione: 
+  il livello ha raggiunto al lunghezza della parola ricercata 
+  se si trova la soluzione, si interrompe la ricerca subito
+  
+  Come si generano le soluzioni ad ogni passo? 
+  Trovare tutte le posizioni adiacenti all'ultima utilizzata 
+  e che contengano al lettera 'corretta' (quella che segue) e che non siano 
+  ancora utilizzate.
+  
+  Come si avvia la ricorsione?
+  Si parte da una posizione ben specifica, livello=1, che contenga il primo carattere della 
+  parola da ricercare. 
+  
+  Che strutture dati servono? 
+  String per memorizzare la parola 
+  Livello
+  List<Pos> corrispondente alla sequenza di caselle 
+  
+  

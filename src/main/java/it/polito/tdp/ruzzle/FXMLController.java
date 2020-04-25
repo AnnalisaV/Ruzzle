@@ -2,6 +2,7 @@ package it.polito.tdp.ruzzle;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -88,19 +89,66 @@ public class FXMLController {
     private TextArea txtResult; // Value injected by FXMLLoader
 
 
+    /**
+     * Prova singole parole se stanno nella matrice Ruzzle 
+     * @param event
+     */
     @FXML
     void handleProva(ActionEvent event) {
+    	
+    	//imposto tutto da capo come refresh dell'interfaccia grafica
+    	for (Button b : letters.values()){
+    		b.setDefaultButton(false);
+    	}
 
+    	String parola= txtParola.getText(); 
+    	//controllo questo input 
+    	//Ruzzle richiede che le parole siano almeno di due caratteri
+    	if (parola.length()<=1) {
+    		txtResult.appendText("ERRORE Devi inserire parole di almeno due lettere!\n");
+    		return; 
+    	}
+    	parola=parola.toUpperCase(); // infatti nella matrice sono maiuscole
+    	//voglio solo caratteri alfabetici (con una regexp)
+    	if (!parola.matches("[A-Z]+")) {
+    		txtResult.appendText("ERRORE Devi inserire solo caratteri alfabetici\n");
+    		return; 
+    	}
+    	
+    	// tutto va bene
+    	List<Pos> percorso= this.model.trovaParola(parola); 
+    	if(percorso!=null) {
+    		//System.out.println(percorso);
+    		//evidenzio il percorso, ovvero le lettere che formano la parola
+    		for (Pos p : percorso) {
+    			letters.get(p).setDefaultButton(true); // dalla binding
+    		}
+    	}else {
+    		txtResult.appendText("Parola non trovata!\n");
+    	}
+    	
     }
 
     @FXML
     void handleReset(ActionEvent event) {
     	model.reset();
+
+    	//imposto tutto da capo come refresh dell'interfaccia grafica
+    	for (Button b : letters.values()){
+    		b.setDefaultButton(false);}
     }
     
     @FXML
     void handleRisolvi(ActionEvent event) {
 
+    	List<String> tutte= this.model.trovaTutte(); 
+    	
+    	txtResult.clear();
+    	txtResult.appendText(String.format("Ho trovato %d soluzioni \n", tutte.size()));
+    	
+    	for (String s : tutte) {
+    		txtResult.appendText(s+"\n");
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
